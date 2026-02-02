@@ -1,0 +1,266 @@
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  --font-size: 16px;
+  
+  /* 🌞 Light Mode - Sky Blue / Trustful AI */
+  /* 배경 계층 구조 */
+  --background: #F5F9FF;           /* 가장 밝은 배경 */
+  --background-secondary: #EEF4FF; /* 중간 배경 (큰 박스) */
+  --card: #F8FBFF;                 /* 작은 박스 (완전 흰색 아님) */
+  
+  /* Primary Action */
+  --primary: #3B82F6;
+  --primary-hover: #2563EB;
+  --primary-foreground: #F8FBFF;
+  
+  /* Secondary Accent */
+  --secondary: #93C5FD;
+  --secondary-light: #BFDBFE;
+  --highlight: #BFDBFE;
+  
+  /* Text */
+  --text-primary: #1E293B;
+  --text-secondary: #475569;
+  --text-disabled: #94A3B8;
+  
+  /* Border / Divider */
+  --border: #DBEAFE;
+  --border-focus: #93C5FD;
+  
+  /* Severity Colors - 심각도별 색상 */
+  --critical: #EF4444;        /* 빨간색 - Critical */
+  --critical-bg: #FEE2E2;
+  --critical-text: #DC2626;
+  
+  --high: #F97316;            /* 주황색 - High */
+  --high-bg: #FFEDD5;
+  --high-text: #EA580C;
+  
+  --medium: #EAB308;          /* 노란색 - Medium */
+  --medium-bg: #FEF3C7;
+  --medium-text: #CA8A04;
+  
+  --low: #10B981;             /* 초록색 - Low */
+  --low-bg: #D1FAE5;
+  --low-text: #059669;
+  
+  /* State Colors - Pass/Success */
+  --success: #10B981;
+  --success-bg: #D1FAE5;
+  --success-text: #059669;
+  
+  /* State Colors - Warning */
+  --warning: #F59E0B;
+  --warning-bg: #FEF3C7;
+  --warning-text: #D97706;
+  
+  --font-weight-medium: 500;
+  --font-weight-normal: 400;
+  --radius: 0.625rem;
+}
+
+.dark {
+  /* 🌙 Dark Mode - Sky Blue / Trustful AI */
+  --background: #0B1220;
+  --background-secondary: #111A2E;
+  --card: #111A2E;
+  
+  /* Primary Action */
+  --primary: #60A5FA;
+  --primary-hover: #3B82F6;
+  --primary-foreground: #FFFFFF;
+  
+  /* Secondary Accent */
+  --secondary: #BFDBFE;
+  --secondary-light: #DBEAFE;
+  --highlight: #DBEAFE;
+  
+  /* Text */
+  --text-primary: #EFF6FF;
+  --text-secondary: #C7D2FE;
+  --text-disabled: #93C5FD;
+  
+  /* Border / Divider */
+  --border: #1E3A8A;
+  --border-focus: #BFDBFE;
+  
+  /* Severity Colors - 다크모드 */
+  --critical: #F87171;
+  --critical-bg: rgba(248, 113, 113, 0.15);
+  --critical-text: #FCA5A5;
+  
+  --high: #FB923C;
+  --high-bg: rgba(251, 146, 60, 0.15);
+  --high-text: #FDBA74;
+  
+  --medium: #FBBF24;
+  --medium-bg: rgba(251, 191, 36, 0.15);
+  --medium-text: #FCD34D;
+  
+  --low: #34D399;
+  --low-bg: rgba(52, 211, 153, 0.15);
+  --low-text: #6EE7B7;
+  
+  /* State Colors */
+  --success: #34D399;
+  --success-bg: rgba(52, 211, 153, 0.15);
+  --success-text: #6EE7B7;
+  
+  --warning: #FBBF24;
+  --warning-bg: rgba(251, 191, 36, 0.15);
+  --warning-text: #FCD34D;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-background-secondary: var(--background-secondary);
+  --color-card: var(--card);
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-light: var(--secondary-light);
+  --color-highlight: var(--highlight);
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-disabled: var(--text-disabled);
+  --color-border: var(--border);
+  --color-border-focus: var(--border-focus);
+  
+  /* Severity colors */
+  --color-critical: var(--critical);
+  --color-critical-bg: var(--critical-bg);
+  --color-critical-text: var(--critical-text);
+  --color-high: var(--high);
+  --color-high-bg: var(--high-bg);
+  --color-high-text: var(--high-text);
+  --color-medium: var(--medium);
+  --color-medium-bg: var(--medium-bg);
+  --color-medium-text: var(--medium-text);
+  --color-low: var(--low);
+  --color-low-bg: var(--low-bg);
+  --color-low-text: var(--low-text);
+  
+  /* State colors */
+  --color-success: var(--success);
+  --color-success-bg: var(--success-bg);
+  --color-success-text: var(--success-text);
+  --color-warning: var(--warning);
+  --color-warning-bg: var(--warning-bg);
+  --color-warning-text: var(--warning-text);
+  
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+
+@layer base {
+  * {
+    @apply outline-border-focus/50;
+  }
+
+  body {
+    @apply bg-background text-text-primary;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Custom scrollbar styles for light mode */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: #93C5FD #DBEAFE;
+  }
+
+  *::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+
+  *::-webkit-scrollbar-track {
+    background: #DBEAFE;
+    border-radius: 5px;
+  }
+
+  *::-webkit-scrollbar-thumb {
+    background: #93C5FD;
+    border-radius: 5px;
+    border: 2px solid #DBEAFE;
+  }
+
+  *::-webkit-scrollbar-thumb:hover {
+    background: #3B82F6;
+  }
+
+  /* Dark mode scrollbar */
+  .dark * {
+    scrollbar-color: #60A5FA #1E3A8A;
+  }
+
+  .dark *::-webkit-scrollbar-track {
+    background: #1E3A8A;
+  }
+
+  .dark *::-webkit-scrollbar-thumb {
+    background: #60A5FA;
+    border-color: #1E3A8A;
+  }
+
+  .dark *::-webkit-scrollbar-thumb:hover {
+    background: #3B82F6;
+  }
+}
+
+/**
+ * Base typography. This is not applied to elements which have an ancestor with a Tailwind text class.
+ */
+@layer base {
+  :where(:not(:has([class*=' text-']), :not(:has([class^='text-'])))) {
+    h1 {
+      font-size: var(--text-2xl);
+      font-weight: var(--font-weight-medium);
+      line-height: 1.5;
+    }
+
+    h2 {
+      font-size: var(--text-xl);
+      font-weight: var(--font-weight-medium);
+      line-height: 1.5;
+    }
+
+    h3 {
+      font-size: var(--text-lg);
+      font-weight: var(--font-weight-medium);
+      line-height: 1.5;
+    }
+
+    h4 {
+      font-size: var(--text-base);
+      font-weight: var(--font-weight-medium);
+      line-height: 1.5;
+    }
+
+    label {
+      font-size: var(--text-base);
+      font-weight: var(--font-weight-medium);
+      line-height: 1.5;
+    }
+
+    button {
+      font-size: var(--text-base);
+      font-weight: var(--font-weight-medium);
+      line-height: 1.5;
+    }
+
+    input {
+      font-size: var(--text-base);
+      font-weight: var(--font-weight-normal);
+      line-height: 1.5;
+    }
+  }
+}
+
+html {
+  font-size: var(--font-size);
+}

@@ -1,5 +1,6 @@
 package com.mido.verification.upload;
 
+import com.mido.verification.common.ApiResponseVoid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,11 +23,11 @@ public class UploadController {
     }
 
     @PostMapping("/{id}/upload")
-    public ResponseEntity<Void> upload(
+    public ResponseEntity<ApiResponseVoid> upload(
             @PathVariable("id") UUID id,
             @RequestParam("file") MultipartFile file
     ) throws IOException {
         uploadService.upload(id, file);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(ApiResponseVoid.ok());
     }
 }

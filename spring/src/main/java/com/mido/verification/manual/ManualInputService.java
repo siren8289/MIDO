@@ -28,8 +28,10 @@ public class ManualInputService {
     }
 
     @Transactional
-    public UUID create(ManualInputRequest request) {
+    public VerificationCreateResponse create(ManualInputRequest request) {
         Instant now = Instant.now();
+
+        validate(request);
 
         VerificationData data = new VerificationData();
         data.setId(UUID.randomUUID());
@@ -59,6 +61,50 @@ public class ManualInputService {
         context.setCreatedAt(now);
         workContextRepository.save(context);
 
-        return data.getId();
+        VerificationCreateResponse response = new VerificationCreateResponse();
+        response.setId(data.getId());
+        response.setStatus(VerificationCreateResponse.Status.DRAFT);
+        response.setNextAction(determineNextAction(request.getInputType()));
+        return response;
+    }
+
+    private void validate(ManualInputRequest request) {
+        String type = request.getInputType();
+        if (type == null || type.isBlank()) {
+            throw new IllegalArgumentException("inputType is required");
+        }
+
+        switch (type) {
+            case "PASTE" -> {
+                requireNotBlank(request.getRawInput(), "rawInput is required for PASTE");
+            }
+            case "COMMIT" -> {
+                requireNotBlank(request.getRepoUrl(), "repoUrl is required for COMMIT");
+                requireNotBlank(request.getCommitHash(), "commitHash is required for COMMIT");
+            }
+            case "PR" -> {
+                requireNotBlank(request.getRepoUrl(), "repoUrl is required for PR");
+                if (request.getPrNumber() == null || request.getPrNumber() < 1) {
+                    throw new IllegalArgumentException("prNumber is required and must be >= 1 for PR");
+                }
+            }
+            case "FILE" -> {
+                // FILE 모드에서는 이 단계에서 파일이 오지 않으므로 추가 필수값 없음
+            }
+            default -> throw new IllegalArgumentException("Unsupported inputType: " + type);
+        }
+    }
+
+    private void requireNotBlank(String value, String message) {
+        if (value == null || value.isBlank()) {
+            throw new IllegalArgumentException(message);
+        }
+    }
+
+    private VerificationCreateResponse.NextAction determineNextAction(String inputType) {
+        if ("FILE".equals(inputType)) {
+            return VerificationCreateResponse.NextAction.UPLOAD_FILE;
+        }
+        return VerificationCreateResponse.NextAction.VIEW_CONTEXT;
     }
 }
